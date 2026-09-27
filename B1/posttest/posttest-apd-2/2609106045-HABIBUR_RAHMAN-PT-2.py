@@ -22,3 +22,4 @@ print ("Rata-rata: ", rata_rata)
 print ("nim : ", nim)
 print ("Output bolean: ", bolean)
 print (f"total_euro =  {total_euro:.2f}")
+
