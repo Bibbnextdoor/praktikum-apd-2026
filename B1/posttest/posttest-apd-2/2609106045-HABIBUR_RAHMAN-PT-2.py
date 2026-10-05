@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 makanan_1 = int (15000)
 makanan_2 = int (16000)
 makanan_3 = int (19000)
@@ -24,7 +24,7 @@ print ("nim : ", nim)
 print ("Output bolean: ", bolean)
 print (f"total_euro =  {total_euro:.2f}")
 
-=======
+
 makanan_1 = int (15000)
 makanan_2 = int (16000)
 makanan_3 = int (19000)
@@ -49,4 +49,4 @@ print ("Rata-rata: ", rata_rata)
 print ("nim : ", nim)
 print ("Output bolean: ", bolean)
 print (f"total_euro =  {total_euro:.2f}")
->>>>>>> 8e49848866ddff9b100084daff810b1a2cf12cc9
+
