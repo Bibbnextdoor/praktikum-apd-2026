@@ -1,0 +1,164 @@
+import os
+
+users = {
+    "admin": {"password": "adminbarca", "role": "admin"},
+    "user": {"password": "userbarca", "role": "user"},
+}
+pemain = {
+    "1": {"nama": "Lionel Messi", "posisi": "Penyerang", "no": 10},
+    "2": {"nama": "Luis Suarez", "posisi": "Penyerang", "no": 9},
+    "3": {"nama": "Neymar Jr", "posisi": "Penyerang", "no": 11},
+}
+id_terakhir = 3
+
+
+def buat_id_baru():
+    global id_terakhir
+    id_terakhir += 1
+    return str(id_terakhir)
+
+
+def hitung_pemain():
+    return len(pemain)
+
+
+def cek_login(username, password):
+    if username in users and users[username]["password"] == password:
+        return users[username]["role"]
+    return ""
+
+
+def input_angka(pesan):
+    try:
+        return int(input(pesan))
+    except ValueError:
+        print("Input harus berupa angka!")
+        return input_angka(pesan)
+
+
+def header(judul):
+    os.system("cls")
+    print("-" * 37)
+    print(f"{judul:^37}")
+    print("-" * 37)
+
+
+def tampil_pemain():
+    print("ID | Nama | Posisi | No Punggung")
+    for id_p, data in pemain.items():
+        print(f"{id_p}  {data['nama']}\t{data['posisi']}\t{data['no']}")
+    print(f"Total pemain: {hitung_pemain()}")
+
+
+def tambah_pemain():
+    nama = input("Nama: ")
+    posisi = input("Posisi: ")
+    try:
+        assert nama != "" and posisi != "", "Data tidak boleh kosong!"
+    except AssertionError as e:
+        print(e)
+        return
+    no = input_angka("No punggung: ")
+    pemain[buat_id_baru()] = {"nama": nama, "posisi": posisi, "no": no}
+    print("Pemain berhasil ditambahkan")
+
+
+def ubah_pemain():
+    id_user = input("Masukkan ID pemain: ")
+    try:
+        data = pemain[id_user]
+    except KeyError:
+        print("ID tidak ditemukan!")
+        return
+    print("Kosongkan data yang tidak ingin diubah")
+    nama = input("Nama baru: ")
+    posisi = input("Posisi baru: ")
+    no = input("No punggung baru: ")
+    try:
+        if no != "":
+            data["no"] = int(no)
+    except ValueError:
+        print("No punggung harus angka!")
+        return
+    if nama != "":
+        data["nama"] = nama
+    if posisi != "":
+        data["posisi"] = posisi
+    print("Data berhasil diubah")
+
+
+def hapus_pemain():
+    hapus_id = input("Masukkan ID pemain: ")
+    try:
+        del pemain[hapus_id]
+        print("Pemain berhasil dihapus")
+    except KeyError:
+        print("ID tidak ditemukan!")
+
+
+def register():
+    user_baru = input("Username baru: ")
+    pass_baru = input("Password baru: ")
+    try:
+        assert user_baru != "" and pass_baru != "", "Username dan password tidak boleh kosong!"
+        assert user_baru not in users, "Username sudah dipakai!"
+        assert len(pass_baru) >= 3, "Password minimal 3 karakter!"
+    except AssertionError as e:
+        print(e)
+        return
+    users[user_baru] = {"password": pass_baru, "role": "user"}
+    print("Register berhasil, silakan login")
+
+
+def menu_pengguna(role):
+    while True:
+        header("Menu " + role)
+        print("1. Lihat pemain")
+        if role == "admin":
+            print("2. Tambah pemain")
+            print("3. Ubah pemain")
+            print("4. Hapus pemain")
+        print("0. Logout")
+        menu = input("Pilih menu: ")
+
+        if menu == "0":
+            break
+        elif menu == "1":
+            tampil_pemain()
+        elif menu == "2" and role == "admin":
+            tambah_pemain()
+        elif menu == "3" and role == "admin":
+            ubah_pemain()
+        elif menu == "4" and role == "admin":
+            hapus_pemain()
+        else:
+            print("Pilihan tidak valid!")
+        input("Kembali ke menu, tekan enter")
+
+
+
+while True:
+    header("DATA PEMAIN FC BARCELONA 2015")
+    print("1. Login")
+    print("2. Register")
+    print("3. Keluar")
+    pilih = input("Pilih menu: ")
+
+    if pilih == "1":
+        username = input("Username: ")
+        password = input("Password: ")
+        role = cek_login(username, password)
+        if role == "":
+            print("Username atau password salah, silahkan coba lagi")
+            input("Kembali ke menu, tekan enter")
+        else:
+            menu_pengguna(role)
+    elif pilih == "2":
+        register()
+        input("Kembali ke menu, tekan enter")
+    elif pilih == "3":
+        print("Terima kasih!")
+        break
+    else:
+        print("Pilihan tidak valid!")
+        input("Kembali ke menu, tekan enter")
