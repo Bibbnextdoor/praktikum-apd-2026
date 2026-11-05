@@ -1,0 +1,33 @@
+
+from utils import header, tampil_menu
+from auth import cek_login, input_login, register
+from menu import menu_pengguna
+ 
+ 
+def main():
+    while True:
+        header("DATA PEMAIN FC BARCELONA 2015")
+        tampil_menu([("1", "Login"), ("2", "Register"), ("3", "Keluar")])
+        pilih = input("Pilih menu: ")
+ 
+        if pilih == "1":
+            username, password = input_login()
+            role = cek_login(username, password)
+            if role == "":
+                print("Username atau password salah, silahkan coba lagi")
+                input("Kembali ke menu, tekan enter")
+            else:
+                menu_pengguna(role)
+        elif pilih == "2":
+            register()
+            input("Kembali ke menu, tekan enter")
+        elif pilih == "3":
+            print("Terima kasih!")
+            break
+        else:
+            print("Pilihan tidak valid!")
+            input("Kembali ke menu, tekan enter")
+ 
+ 
+if __name__ == "__main__":
+    main()
